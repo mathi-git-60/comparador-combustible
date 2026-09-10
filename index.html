@@ -140,6 +140,7 @@
   .hero .digit-card .tipo{ font-size: 11.5px; font-weight: 700; color: var(--text-mute); margin-bottom: 6px; }
   .hero .digit-card .precio{ font-size: 20px; font-weight: 600; line-height: 1.15; word-break: break-word; }
   .hero .digit-card .quien{ font-size: 12px; color: var(--text-mute); margin-top: 5px; }
+  .hero .digit-card .precio-desc{ font-size: 13px; font-weight: 600; color: var(--cyan); margin-top: 4px; word-break: break-word; }
   .hero .empty{ font-size: 13px; color: var(--text-mute); }
 
   .card{
@@ -637,12 +638,23 @@
       (em.combustibles||[]).forEach(function(c){
         if(c.tipo === tipo && c.precio > 0){
           if(!best || c.precio < best.precio){
-            best = { precio: c.precio, detalle: c.detalle, nombre: em.nombre };
+            best = { precio: c.precio, detalle: c.detalle, nombre: em.nombre, descuentos: em.descuentos };
           }
         }
       });
     });
     return best;
+  }
+
+  function descuentoHoyInfo(descuentos, hoy, precioBase){
+    var desc = descuentos ? descuentos[hoy] : null;
+    if(!desc || !(desc.valor > 0)) return null;
+    var tipo = desc.tipo || 'descuento_pct';
+    var tarjeta = desc.tarjeta || '';
+    if(tipo === 'reintegro_fijo'){
+      return { esFijo: true, valor: desc.valor, tarjeta: tarjeta };
+    }
+    return { esFijo: false, tarjeta: tarjeta, precioFinal: precioBase - (precioBase * desc.valor / 100) };
   }
 
   function renderInicio(){
@@ -654,9 +666,17 @@
       if(!data){
         return '<div class="digit-card '+cls+'"><div class="tipo">'+tipo+'</div><div class="empty">Sin cargar</div></div>';
       }
+      var info = descuentoHoyInfo(data.descuentos, hoy, data.precio);
+      var descLine = '';
+      if(info){
+        descLine = info.esFijo
+          ? '<div class="precio-desc mono">+ reintegro de '+formatGs(info.valor)+(info.tarjeta ? ' con '+escapeHtml(info.tarjeta) : '')+' al cargar</div>'
+          : '<div class="precio-desc mono">'+formatGs(info.precioFinal)+(info.tarjeta ? ' con '+escapeHtml(info.tarjeta) : '')+'</div>';
+      }
       return '<div class="digit-card '+cls+'">'+
         '<div class="tipo">'+tipo+(data.detalle ? ' · '+data.detalle : '')+'</div>'+
         '<div class="precio mono">'+formatGs(data.precio)+'</div>'+
+        descLine+
         '<div class="quien">'+escapeHtml(data.nombre)+'</div>'+
       '</div>';
     }
