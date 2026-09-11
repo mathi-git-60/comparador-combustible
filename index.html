@@ -74,7 +74,7 @@
   }
   nav.tabs{
     display:flex;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 20px;
     background: var(--panel);
     padding: 5px;
@@ -88,8 +88,8 @@
     color: var(--text-mute);
     font-family: 'Manrope', sans-serif;
     font-weight: 700;
-    font-size: 12px;
-    padding: 10px 4px;
+    font-size: 11px;
+    padding: 10px 2px;
     min-height: 44px;
     display:flex;
     align-items:center;
@@ -117,7 +117,7 @@
     padding: 20px 18px;
     margin-bottom: 16px;
   }
-  .hero.fav-hero{ border-color: var(--amber); }
+  .hero.destacado-hero{ border-color: var(--amber); }
   .hero .label{
     font-size: 13px;
     color: var(--text-mute);
@@ -141,6 +141,7 @@
   .hero .digit-card .precio{ font-size: 20px; font-weight: 600; line-height: 1.15; word-break: break-word; }
   .hero .digit-card .quien{ font-size: 12px; color: var(--text-mute); margin-top: 5px; }
   .hero .digit-card .precio-desc{ font-size: 13px; font-weight: 600; color: var(--cyan); margin-top: 4px; word-break: break-word; }
+  .hero .digit-card .autocarga-note{ font-size: 11.5px; color: var(--cyan); margin-top: 4px; word-break: break-word; }
   .hero .empty{ font-size: 13px; color: var(--text-mute); }
 
   .card{
@@ -216,7 +217,7 @@
     margin: 14px 0 6px;
   }
   label:first-of-type{ margin-top: 0; }
-  input[type=text], input[type=number], select{
+  input[type=text], input[type=number], input[type=date], select{
     width: 100%;
     background: var(--panel-2);
     border: 1px solid var(--line);
@@ -228,6 +229,7 @@
     min-height: 44px;
   }
   input[type=number]{ font-family: 'JetBrains Mono', monospace; }
+  input[type=date]{ font-family: 'JetBrains Mono', monospace; color-scheme: dark; }
   select{ appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239AA0AC' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
 
   .emblema-list-item{
@@ -245,23 +247,6 @@
   .emblema-list-info{ flex:1; min-width:0; }
   .emblema-list-name{ font-weight:700; font-size:13.5px; }
   .emblema-list-comb{ font-size:11.5px; color: var(--text-mute); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-
-  .star-btn{
-    background: transparent;
-    border: none;
-    color: var(--text-mute);
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 4px;
-    min-width: 40px;
-    min-height: 40px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-  }
-  .star-btn.active{ color: var(--amber); }
 
   .comb-row{
     padding: 10px 0;
@@ -297,21 +282,74 @@
   }
 
   .desc-row{
-    padding: 10px 0;
+    padding: 12px 0;
     border-top: 1px solid var(--line);
   }
   .desc-row:first-of-type{ border-top: none; }
-  .desc-row-line1{ display:flex; gap:8px; align-items:center; }
-  .desc-row-line1 .desc-dia{ flex:1; }
-  .desc-row-line1 .row-remove{ flex: 0 0 44px; min-height:44px; }
-  .desc-row-line2{ display:grid; grid-template-columns: 1fr 88px; gap:8px; margin-top:8px; }
-  .desc-row select, .desc-row input[type=number]{ font-size:16px; min-height:44px; padding:10px 8px; }
-  .desc-row .desc-tarjeta{
-    margin-top: 8px;
-    width: 100%;
-    font-size: 16px;
-    min-height: 44px;
-    padding: 10px 8px;
+  .desc-row-top{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+  }
+  .desc-row-top span{ font-size:11.5px; font-weight:700; color:var(--text-mute); }
+  .desc-row-top .row-remove{ flex: 0 0 40px; min-height:36px; }
+  .day-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .day-chip{
+    padding: 8px 11px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text-mute);
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 36px;
+  }
+  .day-chip.active{ background: var(--amber); color: #201703; border-color: var(--amber); }
+  .desc-row-line2{ display:grid; grid-template-columns: 1fr 100px; gap:8px; margin-top:10px; }
+  .desc-row-line4{ display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px; }
+  .desc-row select, .desc-row input[type=number], .desc-row input[type=text], .desc-row input[type=date]{ font-size:16px; min-height:44px; padding:10px 8px; }
+  .desc-row input[type=text].desc-banco{ margin-top:8px; }
+  .desc-unit{ font-size:11px; color:var(--text-mute); margin-top:4px; }
+
+  .switch-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; }
+  .switch-row span:first-child{ font-size:13.5px; }
+  .switch{ position:relative; width:46px; height:26px; flex-shrink:0; display:inline-block; }
+  .switch input{ opacity:0; width:100%; height:100%; margin:0; position:absolute; cursor:pointer; z-index:1; }
+  .switch .slider{ position:absolute; inset:0; background:var(--panel-2); border:1px solid var(--line); border-radius:999px; transition:.15s; pointer-events:none; }
+  .switch .slider:before{ content:''; position:absolute; height:18px; width:18px; left:3px; top:2px; background:var(--text-mute); border-radius:50%; transition:.15s; }
+  .switch input:checked + .slider{ background: var(--amber-dim); border-color: var(--amber); }
+  .switch input:checked + .slider:before{ transform: translateX(20px); background: var(--amber); }
+
+  .seg-control{
+    display:flex;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 3px;
+    margin-bottom: 14px;
+  }
+  .seg-control button{
+    flex:1;
+    background: transparent;
+    border:none;
+    color: var(--text-mute);
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    padding: 10px 4px;
+    border-radius:6px;
+    cursor:pointer;
+    min-height:42px;
+  }
+  .seg-control button.active{ background: var(--panel); color: var(--text); }
+
+  .warn{
+    font-size: 11.5px;
+    color: var(--amber);
+    margin-top: 6px;
+    line-height: 1.35;
   }
 
   .err{
@@ -435,9 +473,10 @@
 
   <nav class="tabs">
     <button data-tab="inicio" class="active">Inicio</button>
-    <button data-tab="agregar">Agregar emblema</button>
+    <button data-tab="agregar">Agregar</button>
     <button data-tab="comparar">Comparar</button>
     <button data-tab="historial">Historial</button>
+    <button data-tab="config">Config</button>
   </nav>
 
   <div id="content"></div>
@@ -452,15 +491,31 @@
   var SUPABASE_ANON_KEY = 'sb_publishable_4rV0fcFEqKqfmrbv-h87UA_iQExa0TM';
   var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  var FAVORITOS_KEY = 'favoritos-v1';
+  var TARJETAS_KEY = 'tarjetas-v1';
 
   var DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+  var DIAS_CORTO = { 'Lunes':'Lun', 'Martes':'Mar', 'Miércoles':'Mié', 'Jueves':'Jue', 'Viernes':'Vie', 'Sábado':'Sáb', 'Domingo':'Dom' };
+  var TIPOS_DESCUENTO = [
+    { value: 'descuento_pct', label: 'Descuento %', unidad: '%' },
+    { value: 'reintegro_pct', label: 'Reintegro %', unidad: '%' },
+    { value: 'reintegro_fijo', label: 'Reintegro Gs fijo', unidad: 'Gs (total)' },
+    { value: 'gs_litro', label: 'Gs/litro', unidad: 'Gs por litro' }
+  ];
+  var TIPOS_TARJETA = ['Débito','Crédito','QR'];
+  var MARCAS_TARJETA = ['Visa','Mastercard','Amex','Cabal','Panal','Otros'];
+
   var emblemas = [];
   var activeTab = 'inicio';
   var editingId = null;
   var rowCounter = 0;
 
   function todayName(){ var d = new Date().getDay(); return DIAS[(d+6)%7]; }
+  function hoyISO(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,'0');
+    var day = String(d.getDate()).padStart(2,'0');
+    return d.getFullYear()+'-'+m+'-'+day;
+  }
   function formatGs(n){
     if(n === null || n === undefined || isNaN(n)) return '—';
     return 'Gs. ' + Math.round(n).toLocaleString('es-PY');
@@ -471,73 +526,144 @@
     t.classList.add('show');
     setTimeout(function(){ t.classList.remove('show'); }, 1800);
   }
+  function escapeHtml(s){
+    if(s === undefined || s === null) return '';
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
 
-  // ---------- Favoritos (localStorage, por dispositivo) ----------
-  function getFavoritos(){
+  // ---------- Tarjetas "que tengo" (localStorage, por dispositivo) ----------
+  // Preferencia personal: qué tarjetas tiene el dueño de este dispositivo. Por defecto TODAS
+  // apagadas (nada configurado) para que, mientras el usuario no visitó Configuración, la app
+  // no asuma que tiene tarjetas que en realidad no tiene (ver renderInicio: sin tarjetas
+  // configuradas no se arma la sección de destacados).
+  function getTarjetasConfig(){
     try{
-      var raw = window.localStorage.getItem(FAVORITOS_KEY);
-      var arr = raw ? JSON.parse(raw) : [];
-      return Array.isArray(arr) ? arr : [];
+      var raw = window.localStorage.getItem(TARJETAS_KEY);
+      var obj = raw ? JSON.parse(raw) : {};
+      return (obj && typeof obj === 'object') ? obj : {};
     }catch(e){
-      return [];
+      return {};
     }
   }
-  function esFavorito(id){ return getFavoritos().indexOf(id) !== -1; }
-  function toggleFavorito(id){
-    var favs = getFavoritos();
-    var i = favs.indexOf(id);
-    if(i === -1) favs.push(id); else favs.splice(i, 1);
-    try{ window.localStorage.setItem(FAVORITOS_KEY, JSON.stringify(favs)); }catch(e){}
+  function setTarjetaConfig(key, tengo){
+    var cfg = getTarjetasConfig();
+    if(tengo) cfg[key] = true; else delete cfg[key];
+    try{ window.localStorage.setItem(TARJETAS_KEY, JSON.stringify(cfg)); }catch(e){}
   }
-  function favStarHTML(id){
-    var active = esFavorito(id);
-    return '<button type="button" class="star-btn'+(active?' active':'')+'" data-fav-toggle="'+id+'" aria-label="'+(active?'Quitar de favoritos':'Marcar como favorito')+'">'+(active?'★':'☆')+'</button>';
+  function hayTarjetasConfiguradas(cfg){
+    return Object.keys(cfg).some(function(k){ return cfg[k]; });
   }
-  function attachFavToggle(btn){
-    btn.addEventListener('click', function(ev){
-      ev.stopPropagation();
-      var id = btn.dataset.favToggle;
-      toggleFavorito(id);
-      var active = esFavorito(id);
-      btn.classList.toggle('active', active);
-      btn.textContent = active ? '★' : '☆';
-      btn.setAttribute('aria-label', active ? 'Quitar de favoritos' : 'Marcar como favorito');
+
+  // ---------- Helpers de descuentos ----------
+  function grupoTarjetaKey(d){ return [d.banco||'', d.tipo_tarjeta||'', d.marca_tarjeta||''].join('|'); }
+  function requiereTarjeta(d){ return !!((d.banco && d.banco.trim()) || d.tipo_tarjeta || d.marca_tarjeta); }
+  function tieneTarjeta(d, tarjetas){
+    if(!requiereTarjeta(d)) return true;
+    return !!tarjetas[grupoTarjetaKey(d)];
+  }
+  function estaVencido(d){ return !!(d.fecha_limite && d.fecha_limite < hoyISO()); }
+  function fechaLegible(iso){
+    if(!iso) return '';
+    var f = new Date(iso+'T00:00:00');
+    return f.toLocaleDateString('es-PY', { day:'2-digit', month:'2-digit', year:'numeric' });
+  }
+  function warningVencidoHTML(d){
+    return '<div class="warn">⚠ Revisá las bases y condiciones, esta promoción venció el '+fechaLegible(d.fecha_limite)+' y puede haber cambiado.</div>';
+  }
+  function tarjetaLabel(d){
+    return [d.banco, d.tipo_tarjeta, d.marca_tarjeta].filter(function(x){ return x && x.trim(); }).join(' · ');
+  }
+
+  function descuentosDelDia(lista, dia){
+    return (lista||[]).filter(function(d){ return Array.isArray(d.dias) && d.dias.indexOf(dia) !== -1 && d.valor > 0; });
+  }
+  // Descuentos de hoy cuya condición de tarjeta se cumple (la de autocarga se evalúa aparte).
+  function calificaHoy(lista, dia, tarjetas){
+    return descuentosDelDia(lista, dia).filter(function(d){ return tieneTarjeta(d, tarjetas); });
+  }
+  // Los que realmente se van a aplicar en el cálculo, según si el usuario va a autocargar o no.
+  function aplicablesHoy(lista, dia, tarjetas, autocargaOn){
+    return calificaHoy(lista, dia, tarjetas).filter(function(d){ return !d.requiere_autocarga || autocargaOn; });
+  }
+  // Los que exigen autocarga y calificarían, para mostrar como "nota" cuando autocarga está apagado.
+  function autocargaDisponiblesHoy(lista, dia, tarjetas){
+    return calificaHoy(lista, dia, tarjetas).filter(function(d){ return d.requiere_autocarga; });
+  }
+  function notaAutocarga(d){
+    var base;
+    if(d.tipo === 'gs_litro') base = formatGs(d.valor) + '/litro más';
+    else if(d.tipo === 'reintegro_fijo') base = formatGs(d.valor) + ' más (reintegro)';
+    else base = d.valor + '% más';
+    var tj = tarjetaLabel(d);
+    return '+ ' + base + ' con autocarga' + (tj ? ' · ' + tj : '');
+  }
+
+  function sumarDescuentos(aplicados){
+    var pctFrac = 0, gsLitroTotal = 0, fijoTotal = 0;
+    (aplicados||[]).forEach(function(d){
+      if(d.tipo === 'descuento_pct' || d.tipo === 'reintegro_pct') pctFrac += d.valor/100;
+      else if(d.tipo === 'gs_litro') gsLitroTotal += d.valor;
+      else if(d.tipo === 'reintegro_fijo') fijoTotal += d.valor;
     });
+    return { pctFrac: pctFrac, gsLitroTotal: gsLitroTotal, fijoTotal: fijoTotal };
+  }
+  function ahorroDesdeSubtotal(sums, subtotal, litros){
+    var ahorro = subtotal*sums.pctFrac + sums.gsLitroTotal*(litros||0) + sums.fijoTotal;
+    if(ahorro < 0) ahorro = 0;
+    if(ahorro > subtotal) ahorro = subtotal;
+    return ahorro;
+  }
+  function etiquetaDescuento(d){
+    var pref = (d.tipo === 'reintegro_fijo' || d.tipo === 'reintegro_pct') ? 'Reintegro' : (d.tipo === 'gs_litro' ? 'Gs/litro' : 'Descuento');
+    var val = (d.tipo === 'gs_litro' || d.tipo === 'reintegro_fijo') ? formatGs(d.valor) : (d.valor + '%');
+    var tj = tarjetaLabel(d);
+    var autoTxt = d.requiere_autocarga ? ' (autocarga)' : '';
+    return pref + ' ' + val + (tj ? ' · ' + tj : '') + autoTxt;
   }
 
   function combKeyOf(c){ return c.tipo + '|' + (c.detalle || ''); }
-
-  function tieneDescuentoHoy(em, hoy){
-    return !!(em.descuentos && em.descuentos[hoy] && em.descuentos[hoy].valor > 0);
-  }
-
-  function diasConfigurados(descuentos){
-    if(!descuentos) return [];
-    var out = [];
-    DIAS.forEach(function(d){
-      var cfg = descuentos[d];
-      if(cfg && cfg.activo !== false){
-        out.push({ dia: d, tipo: cfg.tipo || 'descuento_pct', valor: cfg.valor || 0, tarjeta: cfg.tarjeta || '' });
-      }
-    });
-    return out;
-  }
 
   function rowFromSupabase(row){
     return {
       id: row.id,
       nombre: row.nombre,
       combustibles: row.combustibles || [],
-      descuentos: row.descuentos || {}
+      descuentos: []
+    };
+  }
+  function descuentoFromSupabase(row){
+    return {
+      id: row.id,
+      emblema_id: row.emblema_id,
+      dias: row.dias || [],
+      tipo: row.tipo,
+      valor: Number(row.valor) || 0,
+      banco: row.banco || '',
+      tipo_tarjeta: row.tipo_tarjeta || '',
+      marca_tarjeta: row.marca_tarjeta || '',
+      requiere_autocarga: !!row.requiere_autocarga,
+      fecha_limite: row.fecha_limite || null
     };
   }
 
-  // ---------- Supabase: emblemas ----------
+  // ---------- Supabase: emblemas + descuentos ----------
   async function loadData(){
     try{
-      var res = await db.from('emblemas').select('*').order('created_at', { ascending: true });
-      if(res.error) throw res.error;
-      emblemas = (res.data || []).map(rowFromSupabase);
+      var resE = await db.from('emblemas').select('*').order('created_at', { ascending: true });
+      if(resE.error) throw resE.error;
+      emblemas = (resE.data || []).map(rowFromSupabase);
+
+      var resD = await db.from('descuentos').select('*');
+      if(resD.error) throw resD.error;
+      var porEmblema = {};
+      (resD.data || []).forEach(function(row){
+        var d = descuentoFromSupabase(row);
+        if(!porEmblema[d.emblema_id]) porEmblema[d.emblema_id] = [];
+        porEmblema[d.emblema_id].push(d);
+      });
+      emblemas.forEach(function(em){ em.descuentos = porEmblema[em.id] || []; });
     }catch(e){
       emblemas = [];
       showToast('No se pudo conectar con la base de datos.');
@@ -562,14 +688,38 @@
     }
   }
 
+  async function guardarDescuentos(emblemaId, descuentos){
+    var del = await db.from('descuentos').delete().eq('emblema_id', emblemaId);
+    if(del.error) throw del.error;
+    if(!descuentos || descuentos.length === 0) return [];
+    var filas = descuentos.map(function(d){
+      return {
+        emblema_id: emblemaId,
+        dias: d.dias,
+        tipo: d.tipo,
+        valor: d.valor,
+        banco: d.banco || '',
+        tipo_tarjeta: d.tipo_tarjeta || '',
+        marca_tarjeta: d.marca_tarjeta || '',
+        requiere_autocarga: !!d.requiere_autocarga,
+        fecha_limite: d.fecha_limite || null
+      };
+    });
+    var ins = await db.from('descuentos').insert(filas).select();
+    if(ins.error) throw ins.error;
+    return (ins.data || []).map(descuentoFromSupabase);
+  }
+
   async function crearEmblema(nombre, combustibles, descuentos){
     try{
       var res = await db.from('emblemas').insert({
-        nombre: nombre, combustibles: combustibles, descuentos: descuentos, updated_at: new Date().toISOString()
+        nombre: nombre, combustibles: combustibles, updated_at: new Date().toISOString()
       }).select().single();
       if(res.error) throw res.error;
-      emblemas.push(rowFromSupabase(res.data));
-      await registrarHistorialPrecios(res.data.id, combustibles, []);
+      var em = rowFromSupabase(res.data);
+      em.descuentos = await guardarDescuentos(em.id, descuentos);
+      emblemas.push(em);
+      await registrarHistorialPrecios(em.id, combustibles, []);
       return true;
     }catch(e){
       showToast('No se pudo guardar. Probá de nuevo.');
@@ -582,10 +732,11 @@
       var em = emblemas.find(function(e){ return e.id === id; });
       var combustiblesViejos = em ? em.combustibles : [];
       var res = await db.from('emblemas').update({
-        nombre: nombre, combustibles: combustibles, descuentos: descuentos, updated_at: new Date().toISOString()
+        nombre: nombre, combustibles: combustibles, updated_at: new Date().toISOString()
       }).eq('id', id);
       if(res.error) throw res.error;
-      if(em){ em.nombre = nombre; em.combustibles = combustibles; em.descuentos = descuentos; }
+      var nuevosDescuentos = await guardarDescuentos(id, descuentos);
+      if(em){ em.nombre = nombre; em.combustibles = combustibles; em.descuentos = nuevosDescuentos; }
       await registrarHistorialPrecios(id, combustibles, combustiblesViejos);
       return true;
     }catch(e){
@@ -615,12 +766,14 @@
     if(activeTab === 'inicio') content.innerHTML = renderInicio();
     else if(activeTab === 'agregar') content.innerHTML = renderAgregar();
     else if(activeTab === 'comparar') content.innerHTML = renderComparar();
+    else if(activeTab === 'config') content.innerHTML = renderConfig();
     else content.innerHTML = renderHistorial();
 
     if(activeTab === 'agregar') attachAgregarHandlers();
     if(activeTab === 'comparar') attachCompararHandlers();
     if(activeTab === 'inicio') attachInicioHandlers();
     if(activeTab === 'historial') attachHistorialHandlers();
+    if(activeTab === 'config') attachConfigHandlers();
   }
 
   document.querySelectorAll('nav.tabs button').forEach(function(b){
@@ -646,77 +799,82 @@
     return best;
   }
 
-  function descuentoHoyInfo(descuentos, hoy, precioBase){
-    var desc = descuentos ? descuentos[hoy] : null;
-    if(!desc || !(desc.valor > 0)) return null;
-    var tipo = desc.tipo || 'descuento_pct';
-    var tarjeta = desc.tarjeta || '';
-    if(tipo === 'reintegro_fijo'){
-      return { esFijo: true, valor: desc.valor, tarjeta: tarjeta };
+  function digitCard(tipo, cls, lista, hoy, tarjetas){
+    var best = cheapestFor(tipo, lista);
+    if(!best){
+      return '<div class="digit-card '+cls+'"><div class="tipo">'+tipo+'</div><div class="empty">Sin cargar</div></div>';
     }
-    return { esFijo: false, tarjeta: tarjeta, precioFinal: precioBase - (precioBase * desc.valor / 100) };
+    var aplicados = aplicablesHoy(best.descuentos, hoy, tarjetas, false);
+    var autoDisp = autocargaDisponiblesHoy(best.descuentos, hoy, tarjetas);
+
+    var html = '<div class="digit-card '+cls+'">'+
+      '<div class="tipo">'+tipo+(best.detalle ? ' · '+best.detalle : '')+'</div>'+
+      '<div class="precio mono">'+formatGs(best.precio)+'</div>';
+
+    if(aplicados.length){
+      var sums = sumarDescuentos(aplicados);
+      var ahorro = ahorroDesdeSubtotal(sums, best.precio, 1);
+      html += '<div class="precio-desc mono">'+formatGs(best.precio - ahorro)+' con descuento hoy</div>';
+      aplicados.filter(estaVencido).forEach(function(d){ html += warningVencidoHTML(d); });
+    }
+    if(autoDisp.length){
+      autoDisp.forEach(function(d){
+        html += '<div class="autocarga-note">'+notaAutocarga(d)+'</div>';
+        if(estaVencido(d)) html += warningVencidoHTML(d);
+      });
+    }
+    html += '<div class="quien">'+escapeHtml(best.nombre)+'</div></div>';
+    return html;
   }
 
   function renderInicio(){
     var hoy = todayName();
-    var favIds = getFavoritos();
-    var favEmblemas = emblemas.filter(function(em){ return favIds.indexOf(em.id) !== -1; });
-
-    function digitCard(tipo, cls, data){
-      if(!data){
-        return '<div class="digit-card '+cls+'"><div class="tipo">'+tipo+'</div><div class="empty">Sin cargar</div></div>';
-      }
-      var info = descuentoHoyInfo(data.descuentos, hoy, data.precio);
-      var descLine = '';
-      if(info){
-        descLine = info.esFijo
-          ? '<div class="precio-desc mono">+ reintegro de '+formatGs(info.valor)+(info.tarjeta ? ' con '+escapeHtml(info.tarjeta) : '')+' al cargar</div>'
-          : '<div class="precio-desc mono">'+formatGs(info.precioFinal)+(info.tarjeta ? ' con '+escapeHtml(info.tarjeta) : '')+'</div>';
-      }
-      return '<div class="digit-card '+cls+'">'+
-        '<div class="tipo">'+tipo+(data.detalle ? ' · '+data.detalle : '')+'</div>'+
-        '<div class="precio mono">'+formatGs(data.precio)+'</div>'+
-        descLine+
-        '<div class="quien">'+escapeHtml(data.nombre)+'</div>'+
-      '</div>';
-    }
+    var tarjetas = getTarjetasConfig();
+    var configurado = hayTarjetasConfiguradas(tarjetas);
 
     var html = '';
 
-    if(favEmblemas.length > 0){
-      html += '<div class="hero fav-hero">'+
-        '<p class="label">★ Favoritos — precio más bajo (sin descuentos)</p>'+
-        '<div class="grid">'+
-          digitCard('Nafta','nafta', cheapestFor('Nafta', favEmblemas))+
-          digitCard('Diesel','diesel', cheapestFor('Diesel', favEmblemas))+
-          digitCard('Alcohol','alcohol', cheapestFor('Alcohol', favEmblemas))+
-        '</div>'+
-      '</div>';
-      html += '<div class="card">'+
-        '<div class="stat-row"><span>Favoritos con descuento o reintegro hoy</span><span class="v mono">'+
-          favEmblemas.filter(function(em){ return tieneDescuentoHoy(em, hoy); }).length+
-        '</span></div>'+
-      '</div>';
-      html += '<p class="label" style="margin:18px 2px 8px;">Todos los emblemas</p>';
+    if(configurado){
+      var destacados = emblemas.filter(function(em){ return calificaHoy(em.descuentos, hoy, tarjetas).length > 0; });
+      if(destacados.length > 0){
+        html += '<div class="hero destacado-hero">'+
+          '<p class="label">Destacados — con descuento hoy para tus tarjetas</p>'+
+          '<div class="grid">'+
+            digitCard('Nafta','nafta', destacados, hoy, tarjetas)+
+            digitCard('Diesel','diesel', destacados, hoy, tarjetas)+
+            digitCard('Alcohol','alcohol', destacados, hoy, tarjetas)+
+          '</div>'+
+        '</div>';
+        html += '<div class="card">'+
+          '<div class="stat-row"><span>Emblemas destacados hoy</span><span class="v mono">'+destacados.length+'</span></div>'+
+        '</div>';
+        html += '<p class="label" style="margin:18px 2px 8px;">Todos los emblemas</p>';
+      }
     }
 
     html += '<div class="hero">'+
       '<p class="label">Precio más bajo cargado (sin descuentos)</p>'+
       '<div class="grid">'+
-        digitCard('Nafta','nafta', cheapestFor('Nafta', emblemas))+
-        digitCard('Diesel','diesel', cheapestFor('Diesel', emblemas))+
-        digitCard('Alcohol','alcohol', cheapestFor('Alcohol', emblemas))+
+        digitCard('Nafta','nafta', emblemas, hoy, tarjetas)+
+        digitCard('Diesel','diesel', emblemas, hoy, tarjetas)+
+        digitCard('Alcohol','alcohol', emblemas, hoy, tarjetas)+
       '</div>'+
     '</div>';
+
+    var conDescuentoHoy = emblemas.filter(function(em){ return calificaHoy(em.descuentos, hoy, tarjetas).length > 0; }).length;
 
     html += '<div class="card">'+
       '<h2>Resumen</h2>'+
       '<div class="stat-row"><span>Emblemas cargados</span><span class="v mono">'+emblemas.length+'</span></div>'+
       '<div class="stat-row"><span>Hoy es</span><span class="v">'+hoy+'</span></div>'+
-      '<div class="stat-row"><span>Con descuento o reintegro hoy</span><span class="v mono">'+
-        emblemas.filter(function(em){ return tieneDescuentoHoy(em, hoy); }).length+
-      '</span></div>'+
+      '<div class="stat-row"><span>Con descuento o reintegro hoy</span><span class="v mono">'+conDescuentoHoy+'</span></div>'+
     '</div>';
+
+    if(!configurado){
+      html += '<div class="card">'+
+        '<p class="sub" style="margin:0;">Todavía no configuraste tus tarjetas. Andá a la pestaña <strong>Config</strong> para marcar las que tenés y ver acá arriba los emblemas más convenientes para vos.</p>'+
+      '</div>';
+    }
 
     if(emblemas.length === 0){
       html += '<div class="card empty-state">'+
@@ -735,23 +893,18 @@
     if(c) c.addEventListener('click', function(){ activeTab='comparar'; renderApp(); });
   }
 
-  function escapeHtml(s){
-    if(s === undefined || s === null) return '';
-    return String(s).replace(/[&<>"']/g, function(c){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-
   // ---------- Agregar / Editar emblema ----------
   function renderEmblemaListSection(){
     if(emblemas.length === 0) return '';
+    var hoy = todayName();
     var items = emblemas.map(function(em){
       var resumen = (em.combustibles||[]).map(function(c){
         return c.tipo + (c.detalle ? ' '+c.detalle : '') + ': ' + formatGs(c.precio);
       }).join(' · ') || 'Sin combustibles cargados';
+      var vencidos = (em.descuentos||[]).filter(estaVencido);
+      var vencidoHtml = vencidos.length ? vencidos.map(warningVencidoHTML).join('') : '';
       return '<div class="emblema-list-item'+(em.id===editingId?' active':'')+'" data-edit-emblema="'+em.id+'">'+
-        favStarHTML(em.id)+
-        '<div class="emblema-list-info"><div class="emblema-list-name">'+escapeHtml(em.nombre)+'</div><div class="emblema-list-comb">'+escapeHtml(resumen)+'</div></div>'+
+        '<div class="emblema-list-info"><div class="emblema-list-name">'+escapeHtml(em.nombre)+'</div><div class="emblema-list-comb">'+escapeHtml(resumen)+'</div>'+vencidoHtml+'</div>'+
       '</div>';
     }).join('');
     return '<div class="card">'+
@@ -784,29 +937,50 @@
   }
 
   function descRowHTML(cfg){
-    cfg = cfg || { dia: DIAS[0], tipo:'descuento_pct', valor:0, tarjeta:'' };
-    var dayOptions = DIAS.map(function(d){ return '<option value="'+d+'"'+(d===cfg.dia?' selected':'')+'>'+d+'</option>'; }).join('');
-    return '<div class="desc-row">'+
-      '<div class="desc-row-line1">'+
-        '<select class="desc-dia">'+dayOptions+'</select>'+
-        '<button type="button" class="row-remove" aria-label="Quitar">✕</button>'+
-      '</div>'+
+    cfg = cfg || { dias:[], tipo:'descuento_pct', valor:0, banco:'', tipo_tarjeta:'', marca_tarjeta:'', requiere_autocarga:false, fecha_limite:'' };
+    rowCounter++;
+    var uid = 'desc' + rowCounter;
+    var dayChips = DIAS.map(function(d){
+      var active = cfg.dias.indexOf(d) !== -1;
+      return '<button type="button" class="day-chip'+(active?' active':'')+'" data-day="'+d+'">'+DIAS_CORTO[d]+'</button>';
+    }).join('');
+    var tipoOptions = TIPOS_DESCUENTO.map(function(t){
+      return '<option value="'+t.value+'"'+(t.value===cfg.tipo?' selected':'')+'>'+t.label+'</option>';
+    }).join('');
+    var tipoTarjetaOptions = '<option value="">Sin tarjeta</option>' + TIPOS_TARJETA.map(function(t){
+      return '<option value="'+t+'"'+(t===cfg.tipo_tarjeta?' selected':'')+'>'+t+'</option>';
+    }).join('');
+    var marcaTarjetaOptions = '<option value="">—</option>' + MARCAS_TARJETA.map(function(m){
+      return '<option value="'+m+'"'+(m===cfg.marca_tarjeta?' selected':'')+'>'+m+'</option>';
+    }).join('');
+    var unidadActual = (TIPOS_DESCUENTO.find(function(t){ return t.value === cfg.tipo; }) || TIPOS_DESCUENTO[0]).unidad;
+
+    return '<div class="desc-row" id="'+uid+'">'+
+      '<div class="desc-row-top"><span>Días en que aplica</span><button type="button" class="row-remove" aria-label="Quitar descuento">✕</button></div>'+
+      '<div class="day-chips">'+dayChips+'</div>'+
       '<div class="desc-row-line2">'+
-        '<select class="desc-tipo">'+
-          '<option value="descuento_pct"'+(cfg.tipo==='descuento_pct'?' selected':'')+'>Descuento %</option>'+
-          '<option value="reintegro_pct"'+(cfg.tipo==='reintegro_pct'?' selected':'')+'>Reintegro %</option>'+
-          '<option value="reintegro_fijo"'+(cfg.tipo==='reintegro_fijo'?' selected':'')+'>Reintegro Gs fijo</option>'+
-        '</select>'+
+        '<select class="desc-tipo">'+tipoOptions+'</select>'+
         '<input type="number" min="0" step="0.5" class="desc-valor" value="'+(cfg.valor||0)+'">'+
       '</div>'+
-      '<input type="text" class="desc-tarjeta" placeholder="Con qué tarjeta (opcional)" value="'+escapeHtml(cfg.tarjeta||'')+'">'+
+      '<div class="desc-unit">'+unidadActual+'</div>'+
+      '<input type="text" class="desc-banco" placeholder="Banco (dejalo vacío si no requiere tarjeta)" value="'+escapeHtml(cfg.banco||'')+'">'+
+      '<div class="desc-row-line4">'+
+        '<select class="desc-tipo-tarjeta">'+tipoTarjetaOptions+'</select>'+
+        '<select class="desc-marca-tarjeta">'+marcaTarjetaOptions+'</select>'+
+      '</div>'+
+      '<label class="switch-row" style="margin-top:8px;">'+
+        '<span>Requiere autocarga</span>'+
+        '<span class="switch"><input type="checkbox" class="desc-autocarga"'+(cfg.requiere_autocarga?' checked':'')+'><span class="slider"></span></span>'+
+      '</label>'+
+      '<label style="margin-top:8px;">Fecha límite de la promoción (opcional)</label>'+
+      '<input type="date" class="desc-fecha-limite" value="'+escapeHtml(cfg.fecha_limite||'')+'">'+
     '</div>';
   }
 
   function renderAgregar(){
     var editing = editingId ? emblemas.find(function(e){ return e.id === editingId; }) : null;
     var combustibles = editing && editing.combustibles && editing.combustibles.length ? editing.combustibles : [{tipo:'Nafta',detalle:'',precio:''}];
-    var descuentosArr = editing ? diasConfigurados(editing.descuentos) : [];
+    var descuentosArr = editing ? editing.descuentos : [];
 
     var rowsHtml = combustibles.map(rowCombustibleHTML).join('');
     var descHtml = descuentosArr.map(descRowHTML).join('');
@@ -814,7 +988,7 @@
     var html = renderEmblemaListSection();
     html += '<div class="card">'+
       '<h2>'+(editing ? 'Editar emblema' : 'Nuevo emblema')+'</h2>'+
-      '<p class="sub">Cargá el nombre y el precio por litro. Los descuentos o reintegros se pueden variar según el día.</p>'+
+      '<p class="sub">Cargá el nombre y el precio por litro. Un mismo emblema puede tener varios descuentos que se combinan (ej: % con tarjeta + Gs/litro por autocarga).</p>'+
       '<div id="form-emblema">'+
         '<label for="input-nombre">Emblema</label>'+
         '<input type="text" id="input-nombre" placeholder="Ej: Copetrol, Puma, Petrobras" value="'+escapeHtml(editing?editing.nombre:'')+'">'+
@@ -823,9 +997,9 @@
         '<div id="comb-list">'+rowsHtml+'</div>'+
         '<button type="button" id="add-comb-row">+ Agregar otro combustible</button>'+
 
-        '<label>Descuentos / reintegros por día</label>'+
+        '<label>Descuentos / reintegros</label>'+
         '<div id="desc-list">'+descHtml+'</div>'+
-        '<button type="button" id="add-desc-row">+ Agregar descuento para otro día</button>'+
+        '<button type="button" id="add-desc-row">+ Agregar descuento</button>'+
 
         '<p class="err" id="form-err"></p>'+
         '<div class="btn-row">'+
@@ -841,9 +1015,7 @@
   function attachAgregarHandlers(){
     var emblemaList = document.getElementById('emblema-list');
     if(emblemaList){
-      emblemaList.querySelectorAll('[data-fav-toggle]').forEach(attachFavToggle);
       emblemaList.addEventListener('click', function(ev){
-        if(ev.target.closest('[data-fav-toggle]')) return;
         var item = ev.target.closest('[data-edit-emblema]');
         if(item){
           editingId = item.dataset.editEmblema;
@@ -870,15 +1042,23 @@
 
     var descList = document.getElementById('desc-list');
     document.getElementById('add-desc-row').addEventListener('click', function(){
-      var usados = [];
-      descList.querySelectorAll('.desc-dia').forEach(function(s){ usados.push(s.value); });
-      var disponibles = DIAS.filter(function(d){ return usados.indexOf(d) === -1; });
-      var dia = disponibles.length ? disponibles[0] : DIAS[0];
-      descList.insertAdjacentHTML('beforeend', descRowHTML({ dia: dia, tipo:'descuento_pct', valor:0, tarjeta:'' }));
+      descList.insertAdjacentHTML('beforeend', descRowHTML(null));
     });
     descList.addEventListener('click', function(ev){
       if(ev.target.classList.contains('row-remove')){
         ev.target.closest('.desc-row').remove();
+        return;
+      }
+      if(ev.target.classList.contains('day-chip')){
+        ev.target.classList.toggle('active');
+        return;
+      }
+    });
+    descList.addEventListener('change', function(ev){
+      if(ev.target.classList.contains('desc-tipo')){
+        var row = ev.target.closest('.desc-row');
+        var unidad = (TIPOS_DESCUENTO.find(function(t){ return t.value === ev.target.value; }) || TIPOS_DESCUENTO[0]).unidad;
+        row.querySelector('.desc-unit').textContent = unidad;
       }
     });
 
@@ -929,14 +1109,22 @@
       }
       errEl.classList.remove('show');
 
-      var descuentos = {};
+      var descuentos = [];
       descList.querySelectorAll('.desc-row').forEach(function(row){
-        var dia = row.querySelector('.desc-dia').value;
-        descuentos[dia] = {
+        var dias = [];
+        row.querySelectorAll('.day-chip.active').forEach(function(chip){ dias.push(chip.dataset.day); });
+        var valor = parseFloat(row.querySelector('.desc-valor').value) || 0;
+        if(dias.length === 0 || valor <= 0) return;
+        descuentos.push({
+          dias: dias,
           tipo: row.querySelector('.desc-tipo').value,
-          valor: parseFloat(row.querySelector('.desc-valor').value) || 0,
-          tarjeta: row.querySelector('.desc-tarjeta').value.trim()
-        };
+          valor: valor,
+          banco: row.querySelector('.desc-banco').value.trim(),
+          tipo_tarjeta: row.querySelector('.desc-tipo-tarjeta').value,
+          marca_tarjeta: row.querySelector('.desc-marca-tarjeta').value,
+          requiere_autocarga: row.querySelector('.desc-autocarga').checked,
+          fecha_limite: row.querySelector('.desc-fecha-limite').value || null
+        });
       });
 
       var guardarBtn = document.getElementById('btn-guardar-emblema');
@@ -955,7 +1143,7 @@
   }
 
   // ---------- Comparar ----------
-  var cmpState = { tipo: 'Nafta', litros: '', dia: todayName() };
+  var cmpState = { tipo: 'Nafta', modo: 'litros', litros: '', monto: '', dia: todayName(), autocarga: false };
 
   function renderComparar(){
     if(emblemas.length === 0){
@@ -967,14 +1155,21 @@
     var dayOptions = DIAS.map(function(d){ return '<option value="'+d+'"'+(d===cmpState.dia?' selected':'')+'>'+d+'</option>'; }).join('');
     var html = '<div class="card">'+
       '<h2>Calculá y compará</h2>'+
+      '<div class="seg-control">'+
+        '<button type="button" data-modo="litros" class="'+(cmpState.modo==='litros'?'active':'')+'">Cargar por litros</button>'+
+        '<button type="button" data-modo="monto" class="'+(cmpState.modo==='monto'?'active':'')+'">Cargar por monto</button>'+
+      '</div>'+
       '<div class="cmp-controls">'+
         '<div><label style="margin-top:0;">Combustible</label><select id="cmp-tipo">'+
           '<option value="Nafta"'+(cmpState.tipo==='Nafta'?' selected':'')+'>Nafta</option>'+
           '<option value="Diesel"'+(cmpState.tipo==='Diesel'?' selected':'')+'>Diesel</option>'+
           '<option value="Alcohol"'+(cmpState.tipo==='Alcohol'?' selected':'')+'>Alcohol</option>'+
         '</select></div>'+
-        '<div><label style="margin-top:0;">Litros</label><input type="number" min="0" step="1" id="cmp-litros" placeholder="Ej: 20" value="'+cmpState.litros+'"></div>'+
+        (cmpState.modo === 'litros'
+          ? '<div><label style="margin-top:0;">Litros</label><input type="number" min="0" step="1" id="cmp-litros" placeholder="Ej: 20" value="'+cmpState.litros+'"></div>'
+          : '<div><label style="margin-top:0;">Monto (Gs)</label><input type="number" min="0" step="1000" id="cmp-monto" placeholder="Ej: 200000" value="'+cmpState.monto+'"></div>')+
         '<div class="full"><label>Día (para el descuento/reintegro)</label><select id="cmp-dia">'+dayOptions+'</select></div>'+
+        '<div class="full switch-row"><span>¿Vas a autocargar?</span><span class="switch"><input type="checkbox" id="cmp-autocarga"'+(cmpState.autocarga?' checked':'')+'><span class="slider"></span></span></div>'+
       '</div>'+
     '</div>'+
     '<div id="resultados"></div>';
@@ -982,32 +1177,51 @@
   }
 
   function computeResultRows(){
-    var litros = parseFloat(cmpState.litros);
-    var hasLitros = !isNaN(litros) && litros > 0;
+    var tarjetas = getTarjetasConfig();
+    var dia = cmpState.dia;
+    var litrosInput = parseFloat(cmpState.litros);
+    var hasLitros = !isNaN(litrosInput) && litrosInput > 0;
+    var montoInput = parseFloat(cmpState.monto);
+    var hasMonto = !isNaN(montoInput) && montoInput > 0;
+
     var rows = [];
     emblemas.forEach(function(em){
       (em.combustibles||[]).forEach(function(c){
         if(c.tipo !== cmpState.tipo) return;
-        var subtotal = hasLitros ? c.precio * litros : c.precio;
-        var desc = em.descuentos ? em.descuentos[cmpState.dia] : null;
-        var ahorro = 0, tipoAplicado = null, tarjeta = '';
-        if(desc && desc.valor > 0){
-          tipoAplicado = desc.tipo;
-          tarjeta = desc.tarjeta || '';
-          if(desc.tipo === 'descuento_pct') ahorro = subtotal * desc.valor/100;
-          else if(desc.tipo === 'reintegro_pct') ahorro = subtotal * desc.valor/100;
-          else if(desc.tipo === 'reintegro_fijo') ahorro = Math.min(desc.valor, subtotal);
+        var aplicados = aplicablesHoy(em.descuentos, dia, tarjetas, cmpState.autocarga);
+        var sums = sumarDescuentos(aplicados);
+        var row = {
+          emblemaId: em.id, nombre: em.nombre, detalle: c.detalle, precioLitro: c.precio,
+          aplicados: aplicados, modo: cmpState.modo
+        };
+
+        if(cmpState.modo === 'litros'){
+          var subtotal = hasLitros ? c.precio * litrosInput : c.precio;
+          var ahorro = ahorroDesdeSubtotal(sums, subtotal, hasLitros ? litrosInput : 1);
+          row.hasInput = hasLitros;
+          row.subtotal = subtotal;
+          row.ahorro = ahorro;
+          row.final = subtotal - ahorro;
+          row.sortVal = row.final;
+        } else {
+          row.hasInput = hasMonto;
+          if(hasMonto){
+            var denom = 1 - sums.pctFrac - (sums.gsLitroTotal / c.precio);
+            if(denom < 0.0001) denom = 0.0001;
+            var subtotal2 = (montoInput + sums.fijoTotal) / denom;
+            row.subtotal = subtotal2;
+            row.litrosPosibles = subtotal2 / c.precio;
+            row.sortVal = -row.litrosPosibles;
+          } else {
+            var unitAhorro = ahorroDesdeSubtotal(sums, c.precio, 1);
+            row.litrosPosibles = null;
+            row.sortVal = c.precio - unitAhorro;
+          }
         }
-        var final = subtotal - ahorro;
-        rows.push({
-          emblemaId: em.id, nombre: em.nombre,
-          detalle: c.detalle, precioLitro: c.precio,
-          subtotal: subtotal, ahorro: ahorro, tipoAplicado: tipoAplicado, tarjeta: tarjeta, final: final,
-          hasLitros: hasLitros
-        });
+        rows.push(row);
       });
     });
-    rows.sort(function(a,b){ return a.final - b.final; });
+    rows.sort(function(a,b){ return a.sortVal - b.sortVal; });
     return rows;
   }
 
@@ -1022,20 +1236,31 @@
     var html = rows.map(function(r, i){
       var best = i === 0 && rows.length > 1;
       var badgeCls = cmpState.tipo === 'Nafta' ? 'nafta' : (cmpState.tipo === 'Diesel' ? 'diesel' : 'alcohol');
-      var ahorroLabel = '';
-      if(r.ahorro > 0){
-        var etiqueta = r.tipoAplicado === 'reintegro_fijo' || r.tipoAplicado === 'reintegro_pct' ? 'Reintegro' : 'Descuento';
-        ahorroLabel = '<div class="savings">'+etiqueta+': -'+formatGs(r.ahorro)+(r.tarjeta ? ' con '+escapeHtml(r.tarjeta) : '')+'</div>';
+
+      var mainFigure, subFigure;
+      if(r.modo === 'litros'){
+        mainFigure = formatGs(r.final);
+        subFigure = formatGs(r.precioLitro)+' / litro'+(r.hasInput ? '' : ' · ingresá litros para el total');
+      } else {
+        mainFigure = r.hasInput ? (r.litrosPosibles.toLocaleString('es-PY', {maximumFractionDigits:1})+' litros') : '—';
+        subFigure = formatGs(r.precioLitro)+' / litro'+(r.hasInput ? '' : ' · ingresá el monto para ver los litros posibles');
       }
+
+      var ahorroLabel = '';
+      if(r.aplicados.length){
+        ahorroLabel = '<div class="savings">'+r.aplicados.map(etiquetaDescuento).join(' + ')+'</div>';
+        ahorroLabel += r.aplicados.filter(estaVencido).map(warningVencidoHTML).join('');
+      }
+
       return '<div class="result'+(best?' best':'')+'" data-id="'+r.emblemaId+'">'+
         '<div class="top-row">'+
-          '<div class="top-row-left">'+favStarHTML(r.emblemaId)+'<div class="name">'+escapeHtml(r.nombre)+'</div></div>'+
+          '<div class="top-row-left"><div class="name">'+escapeHtml(r.nombre)+'</div></div>'+
           '<span class="badge '+badgeCls+'">'+cmpState.tipo+(r.detalle?' · '+escapeHtml(r.detalle):'')+'</span>'+
         '</div>'+
         '<div class="price-block">'+
           '<div>'+
-            '<div class="final mono">'+formatGs(r.final)+'</div>'+
-            '<div class="persub">'+formatGs(r.precioLitro)+' / litro'+(r.hasLitros?'':' · ingresá litros para el total') +'</div>'+
+            '<div class="final mono">'+mainFigure+'</div>'+
+            '<div class="persub">'+subFigure+'</div>'+
           '</div>'+
           (best ? '<span class="badge best">Más conveniente</span>' : '')+
         '</div>'+
@@ -1047,8 +1272,6 @@
       '</div>';
     }).join('');
     container.innerHTML = html;
-
-    container.querySelectorAll('[data-fav-toggle]').forEach(attachFavToggle);
 
     container.querySelectorAll('[data-edit]').forEach(function(b){
       b.addEventListener('click', function(){ editingId = b.dataset.edit; activeTab='agregar'; renderApp(); });
@@ -1075,13 +1298,78 @@
     var go = document.getElementById('go-agregar-2');
     if(go){ go.addEventListener('click', function(){ activeTab='agregar'; renderApp(); }); return; }
 
+    document.querySelectorAll('.seg-control [data-modo]').forEach(function(b){
+      b.addEventListener('click', function(){
+        cmpState.modo = b.dataset.modo;
+        renderApp();
+      });
+    });
+
     var tipoSel = document.getElementById('cmp-tipo');
-    var litrosInp = document.getElementById('cmp-litros');
     var diaSel = document.getElementById('cmp-dia');
+    var autocargaChk = document.getElementById('cmp-autocarga');
     tipoSel.addEventListener('change', function(){ cmpState.tipo = tipoSel.value; renderResultados(); });
-    litrosInp.addEventListener('input', function(){ cmpState.litros = litrosInp.value; renderResultados(); });
     diaSel.addEventListener('change', function(){ cmpState.dia = diaSel.value; renderResultados(); });
+    autocargaChk.addEventListener('change', function(){ cmpState.autocarga = autocargaChk.checked; renderResultados(); });
+
+    var litrosInp = document.getElementById('cmp-litros');
+    if(litrosInp) litrosInp.addEventListener('input', function(){ cmpState.litros = litrosInp.value; renderResultados(); });
+    var montoInp = document.getElementById('cmp-monto');
+    if(montoInp) montoInp.addEventListener('input', function(){ cmpState.monto = montoInp.value; renderResultados(); });
+
     renderResultados();
+  }
+
+  // ---------- Config ----------
+  function gruposTarjetas(){
+    var map = {};
+    emblemas.forEach(function(em){
+      (em.descuentos||[]).forEach(function(d){
+        if(!requiereTarjeta(d)) return;
+        var key = grupoTarjetaKey(d);
+        if(!map[key]) map[key] = { banco: d.banco, tipo_tarjeta: d.tipo_tarjeta, marca_tarjeta: d.marca_tarjeta, emblemas: {} };
+        map[key].emblemas[em.nombre] = true;
+      });
+    });
+    return map;
+  }
+
+  function renderConfig(){
+    var grupos = gruposTarjetas();
+    var keys = Object.keys(grupos).sort();
+    var tarjetas = getTarjetasConfig();
+
+    var html = '<div class="card">'+
+      '<h2>Mis tarjetas</h2>'+
+      '<p class="sub">Marcá las tarjetas que tenés vos. Es una preferencia de este dispositivo (como los favoritos de antes): no se guarda en la base de datos ni afecta a otras personas que usen la app. Con esto, Inicio y Comparar solo van a considerar los descuentos de las tarjetas que actives acá — los descuentos que no dependen de una tarjeta (por ejemplo, uno por autocargar) siempre se evalúan aparte, con el interruptor de autocarga.</p>';
+
+    if(keys.length === 0){
+      html += '<p class="sub" style="margin:0;">Todavía no hay descuentos con tarjeta cargados en ningún emblema.</p></div>';
+      return html;
+    }
+
+    html += '<div id="tarjetas-list">';
+    keys.forEach(function(key){
+      var g = grupos[key];
+      var label = [g.banco, g.tipo_tarjeta, g.marca_tarjeta].filter(function(x){ return x && x.trim(); }).join(' · ') || '(sin datos)';
+      var emblemasTxt = Object.keys(g.emblemas).join(', ');
+      var checked = !!tarjetas[key];
+      html += '<div class="emblema-list-item" style="cursor:default;">'+
+        '<div class="emblema-list-info"><div class="emblema-list-name">'+escapeHtml(label)+'</div><div class="emblema-list-comb">'+escapeHtml(emblemasTxt)+'</div></div>'+
+        '<span class="switch"><input type="checkbox" class="tarjeta-toggle" data-key="'+escapeHtml(key)+'"'+(checked?' checked':'')+'><span class="slider"></span></span>'+
+      '</div>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  function attachConfigHandlers(){
+    document.querySelectorAll('.tarjeta-toggle').forEach(function(inp){
+      inp.addEventListener('change', function(){
+        setTarjetaConfig(inp.dataset.key, inp.checked);
+        showToast(inp.checked ? 'Tarjeta activada' : 'Tarjeta desactivada');
+      });
+    });
   }
 
   // ---------- Historial ----------
